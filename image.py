@@ -28,7 +28,7 @@ def get_shape(image):
     return height, width, depth
 
 def is_grayscale(image):
-    if len(get_shape(image)) == 3:
+    if get_shape(image) == 3:
         return False
     return True
 
@@ -68,13 +68,14 @@ def convert_grayscale(image, save, show = True):
             plt.imshow(gray_image, cmap = "gray")
             plt.axis("off")
             plt.show()
-        return np.array(gray_image)
+        return gray_image
     else:
+        gray_image = image
         if show:
             plt.imshow(gray_image, cmap = "gray")
             plt.axis("off")
             plt.show()
-        return image
+        return gray_image
 
 def min_max(image, new_min, new_max):
     return np.uint8((image - image.min())*( (new_max - new_min)/(image.max() - image.min()) ) + new_min)
@@ -217,17 +218,16 @@ def apply_kernel(image, kernel, save):
                         greenc += green[i, j]*kernel_matrix[i, j]
                         bluec  += blue[i, j]*kernel_matrix[i, j]
 
-                r = round(redc)
-                g = round(greenc)
-                b = round(bluec)
+                r, g, b = map(round, [redc, greenc, bluec])
 
-                r, g, b = clip(r), clip(g), clip(b)
+                r, g, b = map(clip, [r, g, b])
 
                 picture[y, x, 2] = r
                 picture[y, x, 1] = g
                 picture[y, x, 0] = b
         if save:
             cv2.imwrite(kernel + ".png", picture)
+            
         plt.imshow(picture[:, :, ::-1])
         plt.axis("off")
         plt.show()
@@ -243,17 +243,17 @@ def apply_kernel(image, kernel, save):
                     for j in range(dim):
                         aux[i , j] = image[ (y - center + j)%height, (x - center + i)%width]
 
-                intensity = 0
+                gray = 0
                 for i in range(dim):
                     for j in range(dim):
-                        intensity += aux[i, j]*kernel_matrix[i, j]
+                        gray += aux[i, j]*kernel_matrix[i, j]
 
-                pxl_intensity = round(intensity)
+                pxl_intensity = round(gray)
                 picture[y, x] = pxl_intensity
         if save:
             cv2.imwrite(kernel + ".png", picture)
 
-        plt.imshow(picture[:, :, ::-1])
+        plt.imshow(picture, cmap = "gray")
         plt.axis("off")
         plt.show()
         return picture
