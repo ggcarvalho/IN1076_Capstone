@@ -112,9 +112,9 @@ def gen_halftone_masks():
     return m
 
 def halftone(image, save):
-    gray = convert_grayscale(image, False, False)
-    adjust = min_max(gray, 0, 9)
-    m = gen_halftone_masks()
+    gray      = convert_grayscale(image, False, False)
+    adjust    = min_max(gray, 0, 9)
+    m         = gen_halftone_masks()
     halftoned = zeros(3*get_shape(adjust)[0], 3*get_shape(adjust)[1], 1)
     for j in range(get_shape(adjust)[0]):
         for i in range(get_shape(adjust)[1]):
