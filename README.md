@@ -26,13 +26,13 @@ The image processing filters avaiable and their respective names (you should use
 
 ![Halftone map](halftone_map.png)
 
-- Mean blur (`mean`): takes the average of a $`3\times 3`$ region.
+- Mean blur (`mean`): takes the average of 3 x 3 regions.
 
-- Gaussian blur (`gaussian`): takes an weighted average of a $3\times 3$ region using a gaussian function.
+- Gaussian blur (`gaussian`): takes an weighted average of a 3 x 3 region using a gaussian function.
 
-- Sharpen (`sharpen`): sharpens the image. Formally, substracts the $4-$neighboor laplacian from the original image.
+- Sharpen (`sharpen`): sharpens the image. Formally, substracts the 4-neighboor laplacian from the original image.
 
-- Laplacian (`laplacian`): returns the $8-$neighboor laplacian applied to the image.
+- Laplacian (`laplacian`): returns the 8-neighboor laplacian applied to the image.
 
 - Emboss (`emboss`): Enhance image emboss.
 
