@@ -284,7 +284,7 @@ def proc_image(path, name, save):
         print("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
 
 def main():
-    SAVE = False
+    SAVE      = False
     path      = "test1.jpeg"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
@@ -301,7 +301,6 @@ def main():
     brighten  = apply_kernel(image, "brighten", SAVE)
     darken    = apply_kernel(image, "darken", SAVE)
     identity  = apply_kernel(image, "identity", SAVE)
-
 
 if __name__ == "__main__":
     main()
