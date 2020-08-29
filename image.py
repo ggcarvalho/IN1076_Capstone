@@ -23,7 +23,7 @@ def get_shape(image):
     try:
         depth   = len(image[0,0])
     except:
-        depth = 1
+        depth   = 1
 
     return height, width, depth
 
@@ -284,17 +284,24 @@ def proc_image(path, name, save):
         print("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
 
 def main():
+    SAVE = False
     path      = "test1.jpeg"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
-    gray      = convert_grayscale(image, True)
-    half      = halftone(image, True)
-    mean      = apply_kernel(image, "mean", True)
-    gaussian  = apply_kernel(image, "gaussian", True)
-    sharpen   = apply_kernel(image, "sharpen", True)
-    laplacian = apply_kernel(image, "laplacian", True)
-    emboss    = apply_kernel(image, "emboss", True)
-    motion    = apply_kernel(image, "motion", True)
+    gray      = convert_grayscale(image, SAVE)
+    half      = halftone(image, SAVE)
+    mean      = apply_kernel(image, "mean", SAVE)
+    gaussian  = apply_kernel(image, "gaussian", SAVE)
+    sharpen   = apply_kernel(image, "sharpen", SAVE)
+    laplacian = apply_kernel(image, "laplacian", SAVE)
+    emboss    = apply_kernel(image, "emboss", SAVE)
+    motion    = apply_kernel(image, "motion", SAVE)
+    x_edge    = apply_kernel(image, "x_edge", SAVE)
+    y_edge    = apply_kernel(image, "y_edge", SAVE)
+    brighten  = apply_kernel(image, "brighten", SAVE)
+    darken    = apply_kernel(image, "darken", SAVE)
+    identity  = apply_kernel(image, "identity", SAVE)
+
 
 if __name__ == "__main__":
     main()
