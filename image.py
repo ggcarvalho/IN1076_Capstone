@@ -77,7 +77,7 @@ def convert_grayscale(image, save, show = True):
         return image
 
 def min_max(image, new_min, new_max):
-    return ((image - image.min())*( (new_max - new_min)/(image.max() - image.min()) ) + new_min).astype(np.uint8)
+    return np.uint8((image - image.min())*( (new_max - new_min)/(image.max() - image.min()) ) + new_min)
 
 def gen_halftone_masks():
     m = zeros(3, 3, 10)
