@@ -285,7 +285,7 @@ def proc_image(path, name, save):
 
 def main():
     SAVE      = False
-    path      = "test1.jpeg"
+    path      = "test1.png"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
     gray      = convert_grayscale(image, SAVE)
