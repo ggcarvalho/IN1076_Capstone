@@ -42,11 +42,11 @@ Run
 
 ### Example
 
-Run
+By running
 
     python image.py 0
 
-executes the test client without saving the outputs.
+you will execute the test client without saving the outputs.
 
 Finally, run `python proc_image.py -h` if you need help.
 
