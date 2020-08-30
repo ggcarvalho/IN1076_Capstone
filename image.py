@@ -1,6 +1,8 @@
 import cv2, sys
 import numpy as np
 import matplotlib.pyplot as plt
+
+from tqdm import tqdm
 from pylab import rcParams
 from argparse import ArgumentTypeError
 
@@ -57,7 +59,7 @@ def convert_grayscale(image, save, show = True):
         width      = get_shape(image)[1]
         gray_image = zeros(height, width, 1)
 
-        for i in range(height):
+        for i in tqdm(range(height)):
             for j in range(width):
                 r, g, b   = image[i, j, 2], image[i, j, 1], image[i, j, 0]
                 luminance = get_luminance(r, g, b)
@@ -118,7 +120,7 @@ def halftone(image, save):
     adjust    = min_max(gray, 0, 9)
     m         = gen_halftone_masks()
     halftoned = zeros(3*get_shape(adjust)[0], 3*get_shape(adjust)[1], 1)
-    for j in range(get_shape(adjust)[0]):
+    for j in tqdm(range(get_shape(adjust)[0]), unit_scale=1):
         for i in range(get_shape(adjust)[1]):
             index = adjust[j, i]
             halftoned[3*j:3+3*j, 3*i:3+3*i] = m[:, :, index]
@@ -193,7 +195,7 @@ def apply_kernel(image, kernel, save):
     if not is_grayscale(image):
         picture = zeros(height, width, 3)
 
-        for y in range(height):
+        for y in tqdm(range(height)):
             for x in range(width):
 
                 red = zeros(dim, dim, 1)
@@ -234,7 +236,7 @@ def apply_kernel(image, kernel, save):
     else:
         picture = zeros(height, width, 1)
 
-        for y in range(height):
+        for y in tqdm(range(height)):
             for x in range(width):
 
                 aux = zeros(dim, dim, 1)
@@ -281,7 +283,7 @@ def proc_image(path, name, save):
         else:
             function(image, name, save)
     except:
-        raise Exception("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
+        raise Exception("\nSorry, something is wrong!")
 
 def main():
     SAVE      = str2bool(sys.argv[1])

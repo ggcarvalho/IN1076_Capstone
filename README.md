@@ -14,6 +14,8 @@ This project aims at implementing some image processing tools without relying on
 
 - Numpy: used to store arrays, uint8 type casting, min-max calculation.
 
+- tqdm: used in every outermost for loop to generate a progress bar.
+
 There are two Python files, `image.py` and `proc_image.py`, the former containing all the implementation needed and a test client, while the latter is the main application.
 
 ### Disclaimer
@@ -46,6 +48,8 @@ Run
 
 execute the test client without saving the outputs.
 
+Finally, run `python proc_image.py -h` if you need help.
+
 ## Remark
 
 List of allowed boolean values for `<save>`:
@@ -53,6 +57,8 @@ List of allowed boolean values for `<save>`:
 `True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
 
 `False`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
+
+Check `str2bool` in `image.py` for more.
 
 ## Tools
 
