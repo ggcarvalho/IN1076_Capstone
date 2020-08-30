@@ -14,11 +14,27 @@ The processed image will always be displayed when the processing is done.
 
 Run
 
-    python image.py
+    python image.py <save>
 
-## Filters
+### Example
 
-The image processing filters avaiable and their respective names (you should use theses names when running the program) are gven below:
+Run
+
+    python image.py 0
+
+execute the test client without saving the outputs.
+
+## Remark
+
+List of allowed boolean values for `<save>`:
+
+`True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
+
+`True`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
+
+## Tools
+
+The image processing tools avaiable and their respective names (you should use theses names when running the program) are given below:
 
 - Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance is calculated using l = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channel, respectively.
 
@@ -39,6 +55,12 @@ The image processing filters avaiable and their respective names (you should use
 - Motion blur (`motion`): Blurs the image as if it is moving.
 
 - Edge detectors (`y_edge`, `x_edge`): Sobel filters to detect vertical and horizontal edges, respectively.
+
+- Brighten (`brighten`): Brightens the image in 20%;
+
+- Darken (`darken`): Darkens the image in 25%;
+
+- Identity (`identity`): Returns the original image.
 
 ## Convolution / Cross-correlation
 

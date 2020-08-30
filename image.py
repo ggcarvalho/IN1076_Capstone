@@ -19,12 +19,10 @@ def str2bool(v):
 def get_shape(image):
     height  = len(image)
     width   = len(image[0])
-
     try:
-        depth   = len(image[0,0])
+        depth = len(image[0,0])
     except:
-        depth   = 1
-
+        depth = 1
     return height, width, depth
 
 def is_grayscale(image):
@@ -142,17 +140,17 @@ kernels = {"mean"      : np.array([[1/9, 1/9, 1/9],
                                    [2/16, 4/16, 2/16],
                                    [1/16, 2/16, 1/16]]),
 
-           "sharpen"   : np.array([[0, -1, 0],
-                                   [-1, 5, -1],
-                                   [0, -1, 0]]),
+           "sharpen"   : np.array([[0 , -1,  0],
+                                   [-1,  5, -1],
+                                   [0 , -1,  0]]),
 
            "laplacian" : np.array([[-1, -1, -1],
-                                   [-1, 8, -1],
+                                   [-1,  8, -1],
                                    [-1, -1, -1]]),
 
            "emboss"    : np.array([[-2, -1, 0],
-                                   [-1, 1 , 1],
-                                   [0, 1, 2]]),
+                                   [-1,  1, 1],
+                                   [0 ,  1, 2]]),
 
            "motion"    : np.array([[1/9, 0, 0, 0, 0, 0, 0, 0, 0],
                                    [0, 1/9, 0, 0, 0, 0, 0, 0, 0],
@@ -164,21 +162,21 @@ kernels = {"mean"      : np.array([[1/9, 1/9, 1/9],
                                    [0, 0, 0, 0, 0, 0, 0, 1/9, 0],
                                    [0, 0, 0, 0, 0, 0, 0, 0, 1/9]]),
 
-           "y_edge"    : np.array([[1, 2, 1],
-                                   [0, 0 ,0],
-                                   [-1, -2, -1]]),
+           "y_edge"    : np.array([[1 ,  2, 1],
+                                   [0 ,  0, 0],
+                                   [-1, -2,-1]]),
 
            "x_edge"    : np.array([[1, 0, -1],
                                    [2, 0, -2],
                                    [1, 0, -1]]),
 
-            "brighten" : np.array([[0, 0, 0],
-                                    [0, 1.2, 0],
-                                    [0, 0, 0]]),
+            "brighten" : np.array([[0,  0 , 0],
+                                   [0, 1.2, 0],
+                                   [0,  0 , 0]]),
 
-            "darken"   : np.array([[0, 0, 0],
-                                    [0, 0.75, 0],
-                                    [0, 0, 0]]),
+            "darken"   : np.array([[0 ,  0  , 0],
+                                   [0 , 0.75, 0],
+                                   [0 ,  0  , 0]]),
 
             "identity" : np.array([[0, 0, 0],
                                    [0, 1, 0],
@@ -283,11 +281,11 @@ def proc_image(path, name, save):
         else:
             function(image, name, save)
     except:
-        print("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
+        raise Exception("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
 
 def main():
     SAVE      = str2bool(sys.argv[1])
-    path      = "gray.png"
+    path      = "test1.png"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
     gray      = convert_grayscale(image, SAVE)
