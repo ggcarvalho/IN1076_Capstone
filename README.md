@@ -6,7 +6,7 @@ This project aims at implementing some image processing tools without relying on
 
 - Open CV: read and write images.
 
-- Argparse and Sys: parse command line arguments.
+- argparse and Sys: parse command line arguments.
 
 - Matplotlib: display output.
 
@@ -16,7 +16,7 @@ This project aims at implementing some image processing tools without relying on
 
 - tqdm: used in every outermost for loop to generate a progress bar.
 
-There are two Python files, `image.py` and `proc_image.py`, the former containing all the implementation needed and a test client, while the latter is the main application.
+There are two Python files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
 
 ### Disclaimer
 
@@ -46,7 +46,7 @@ Run
 
     python image.py 0
 
-execute the test client without saving the outputs.
+executes the test client without saving the outputs.
 
 Finally, run `python proc_image.py -h` if you need help.
 
@@ -64,21 +64,21 @@ Finally, run `python proc_image.py -h` if you need help.
 
 ## Tools
 
-The image processing tools avaiable and their respective names (you should use theses names when running the program) are given below:
+The image processing tools available and their respective names (you should use theses names when running the program) are given below:
 
-- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance is calculated using l = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channel, respectively.
+- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance is calculated using l = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
 
-- Halftone (`halftone`): converts the range of a grayscale image to [0, 9] and for each pixel value performs a mapping acording to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). Due to this mapping, halftoned images have three times the width and three times the heght of the original image.
+- Halftone (`halftone`): converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). Due to this mapping, halftoned images have three times the width and three times the height of the original image.
 
 ![Halftone map](halftone_map.png)
 
-- Mean blur (`mean`): takes the average of 3 x 3 regions.
+- Mean blur (`mean`): takes an average of 3 x 3 regions.
 
-- Gaussian blur (`gaussian`): takes an weighted average of a 3 x 3 region using a gaussian function.
+- Gaussian blur (`gaussian`): takes a weighted average of a 3 x 3 region using a gaussian function.
 
-- Sharpen (`sharpen`): sharpens the image. Formally, substracts the 4-neighboor laplacian from the original image.
+- Sharpen (`sharpen`): sharpens the image. Formally, substracts the 4-neighbors laplacian from the original image.
 
-- Laplacian (`laplacian`): returns the 8-neighboor laplacian applied to the image.
+- Laplacian (`laplacian`): returns the 8-neighbors laplacian applied to the image.
 
 - Emboss (`emboss`): Enhance image emboss.
 
@@ -88,11 +88,11 @@ The image processing tools avaiable and their respective names (you should use t
 
 - Brighten (`brighten`): Brightens the image in 20%.
 
-- Darken (`darken`): Darkens the image in 25%.
+- Darken (`darken`): Darkens the image by 25%.
 
 - Identity (`identity`): Returns the original image.
 
 ## Convolution | Cross-correlation
 
-The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernel matrices. All of the kernel matrices are already "rotated". In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
+The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernel matrices. All of the kernel matrices are already "rotated".  In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
 ![convolution](conv.gif)
