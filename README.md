@@ -1,8 +1,30 @@
 # IN1076 Capstone
 
+Final project for IN1076 @ CIN - UFPE, 2020.1.
+
+This project aims at implementing some image processing tools without relying on built-in functions found in several libraries. We use:
+
+- Open CV: read and write images.
+
+- Argparse and Sys: parse command line arguments.
+
+- Matplotlib: display output.
+
+- Pylab: format the displayed output.
+
+- Numpy: used to store arrays, uint8 type casting, min-max calculation.
+
+There are two Python files, `image.py` and `proc_image.py`, the former containing all the implementation needed and a test client, while the latter is the main application.
+
+### Disclaimer
+
+The program is not optimized, performance-wise. Therefore, for sufficiently large pictures this process takes a while.
+
+## Using the program
+
 To use this program run:
 
-    python proc_image.py <path to image> <filter name> <save>
+    python proc_image.py <path to image> <process name> <save>
 
 ### Example
 
@@ -10,7 +32,7 @@ To use this program run:
 
 The processed image will always be displayed when the processing is done.
 
-## Test client
+## Using the test client
 
 Run
 
@@ -30,7 +52,7 @@ List of allowed boolean values for `<save>`:
 
 `True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
 
-`True`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
+`False`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
 
 ## Tools
 
@@ -56,9 +78,9 @@ The image processing tools avaiable and their respective names (you should use t
 
 - Edge detectors (`y_edge`, `x_edge`): Sobel filters to detect vertical and horizontal edges, respectively.
 
-- Brighten (`brighten`): Brightens the image in 20%;
+- Brighten (`brighten`): Brightens the image in 20%.
 
-- Darken (`darken`): Darkens the image in 25%;
+- Darken (`darken`): Darkens the image in 25%.
 
 - Identity (`identity`): Returns the original image.
 
