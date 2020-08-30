@@ -65,3 +65,4 @@ The image processing tools avaiable and their respective names (you should use t
 ## Convolution / Cross-correlation
 
 The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernel matrices. All of the kernel matrices are already "rotated". In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
+![convolution](conv.gif)
