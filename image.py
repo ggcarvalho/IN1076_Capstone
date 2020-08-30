@@ -28,9 +28,12 @@ def get_shape(image):
     return height, width, depth
 
 def is_grayscale(image):
-    if get_shape(image) == 3:
+    if get_shape(image)[2] == 3:
         return False
-    return True
+    elif get_shape(image)[2] == 1:
+        return True
+    else:
+        raise Exception("Sorry, something is wrong!")
 
 def clip(a):
     if a < 0:
@@ -68,14 +71,14 @@ def convert_grayscale(image, save, show = True):
             plt.imshow(gray_image, cmap = "gray")
             plt.axis("off")
             plt.show()
-        return gray_image
+        return np.array(gray_image)
     else:
-        gray_image = image
+
         if show:
-            plt.imshow(gray_image, cmap = "gray")
+            plt.imshow(image, cmap = "gray")
             plt.axis("off")
             plt.show()
-        return gray_image
+        return image
 
 def min_max(image, new_min, new_max):
     return np.uint8((image - image.min())*( (new_max - new_min)/(image.max() - image.min()) ) + new_min)
@@ -218,8 +221,7 @@ def apply_kernel(image, kernel, save):
                         greenc += green[i, j]*kernel_matrix[i, j]
                         bluec  += blue[i, j]*kernel_matrix[i, j]
 
-                r, g, b = map(round, [redc, greenc, bluec])
-
+                r, g, b = map(int, [redc, greenc, bluec])
                 r, g, b = map(clip, [r, g, b])
 
                 picture[y, x, 2] = r
@@ -227,7 +229,6 @@ def apply_kernel(image, kernel, save):
                 picture[y, x, 0] = b
         if save:
             cv2.imwrite(kernel + ".png", picture)
-            
         plt.imshow(picture[:, :, ::-1])
         plt.axis("off")
         plt.show()
@@ -249,7 +250,8 @@ def apply_kernel(image, kernel, save):
                         gray += aux[i, j]*kernel_matrix[i, j]
 
                 pxl_intensity = round(gray)
-                picture[y, x] = pxl_intensity
+                pxl_intensity = clip(pxl_intensity)
+                picture[y, x] = int(pxl_intensity)
         if save:
             cv2.imwrite(kernel + ".png", picture)
 
@@ -284,8 +286,8 @@ def proc_image(path, name, save):
         print("\nSomething went wrong! Please check the image path and filter name!\n\nRun:\npython proc_image.py -h\nfor help!")
 
 def main():
-    SAVE      = False
-    path      = "test1.png"
+    SAVE      = str2bool(sys.argv[1])
+    path      = "gray.png"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
     gray      = convert_grayscale(image, SAVE)
