@@ -50,15 +50,17 @@ execute the test client without saving the outputs.
 
 Finally, run `python proc_image.py -h` if you need help.
 
-## Remark
+## Remarks
 
-List of allowed boolean values for `<save>`:
+- List of allowed boolean values for `<save>`:
 
-`True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
+  `True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
 
-`False`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
+  `False`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
 
-Check `str2bool` in `image.py` for more.
+   Check `str2bool` in `image.py` for more.
+
+- The outputs are saved in the same directory you run the program. 
 
 ## Tools
 
