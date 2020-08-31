@@ -2,7 +2,7 @@
 
 Final project for IN1076 @ CIN - UFPE, 2020.1.
 
-This project aims at implementing some image processing tools without relying on built-in functions found in several libraries. We use:
+This project aims at implementing a basic image processing tool without relying on built-in functions, found in several libraries. Todo so, we use:
 
 - Open CV: read and write images.
 
@@ -16,7 +16,7 @@ This project aims at implementing some image processing tools without relying on
 
 - tqdm: used in every outermost for loop to generate a progress bar.
 
-There are two Python files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
+There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
 
 ### Disclaimer
 
