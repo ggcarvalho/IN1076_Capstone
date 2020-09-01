@@ -1,0 +1,9 @@
+To Do:
+
+- add a 3 stage pipe for processing, filling non-declared with identity
+
+- add the name of the process to tqdm
+
+- rewrite the readme
+
+- prepare presentation
