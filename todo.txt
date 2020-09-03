@@ -1,0 +1,5 @@
+- remove save from functions and add them to proc_image
+
+- test client doesnt save
+
+- write presentation

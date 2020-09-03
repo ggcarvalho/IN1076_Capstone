@@ -82,7 +82,7 @@ Finally, run `python proc_image.py -h` if you need help.
 
 The image processing tools available and their respective names (you should use theses names when running the program) are given below:
 
-- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
+- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using the formula Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
 
 - Halftone (`halftone`): converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). Due to this mapping, halftoned images have three times the width and three times the height of the original image.
 
