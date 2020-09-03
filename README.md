@@ -30,6 +30,10 @@ We use:
 
         pip install tqdm
 
+- functools: Used the `reduce` method to find the minimum and maximum values of a grayscale images. Installation:
+
+        pip install functools
+
 There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
 
 ### Disclaimer
