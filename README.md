@@ -16,11 +16,9 @@ We use:
 
         pip install argparse
 
-- Matplotlib: To display the output. Installation:
+- Matplotlib and pylab: To display the output. Installation:
 
         pip install matplotlib
-
-- Pylab: To format the displayed output.
 
 - Numpy: Used to store arrays. Intallation:
 
