@@ -6,7 +6,7 @@ This project aims at implementing a basic image processing tool without relying 
 
 - Open CV: read and write images.
 
-- argparse and Sys: parse command line arguments.
+- argparse and sys: parse command line arguments.
 
 - Matplotlib: To display the output.
 
