@@ -112,11 +112,15 @@ The image processing tools available and their respective names (you should use 
 
 - 180 degrees rotation (`rot180`): Rotates the image 180 degrees.
 
-- Minus 90 degrees rotation (`rotm90`): Rotates the image 90 degrees counterclockwise.
+- Minus 90 degrees rotation (`rotm90`): Rotates the image 90 degrees counterclockwise (or 270 degress clockwise).
 
 - Vertical flip (`vert_flip`): Produces a mirrored image.
 
 - Horizontal flip (`hor_flip`): Vertical flip and 180 degrees rotation combined.
+
+- Downscale (`downscale`): Reduces image size by a factor of 2.
+
+- Negative (`negative`): Produces the negative of an image.
 
 ## Convolution | Cross-correlation
 

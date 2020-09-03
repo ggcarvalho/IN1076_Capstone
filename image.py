@@ -358,6 +358,48 @@ def hor_flip(image, save):
         plt.show()
     return flip
 
+def downscale(image, save):
+    print("Reducing image size...")
+    ds = image[::2, ::2]
+    if save:
+        cv2.imwrite("downscaled.png", ds)
+    if is_grayscale(image):
+        plt.imshow(ds, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(ds[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return ds
+
+def negative_pixel(pixel):
+    try:
+        neg_pxl = []
+        for c in pixel:
+            neg_pxl.append(255 - c)
+        return np.array(neg_pxl)
+    except:
+        return 255 - pixel
+
+def negative_image(image, save):
+    h, w, d = get_shape(image)
+    negative = zeros(h, w, d)
+    for i in tqdm(range(h), desc = "negative image"):
+        for j in range(w):
+            negative[i, j] = negative_pixel(image[i, j])
+    if save:
+        cv2.imwrite("negative.png", negative)
+    if is_grayscale(image):
+        plt.imshow(negative, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(negative[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return negative
+
 functions = {"grayscale" : convert_grayscale,
              "halftone"  : halftone,
              "mean"      : apply_kernel,
@@ -375,10 +417,13 @@ functions = {"grayscale" : convert_grayscale,
              "rot180"    : rot180,
              "rotm90"    : rotm90,
              "hor_flip"  : hor_flip,
-             "vert_flip" : vert_flip}
+             "vert_flip" : vert_flip,
+             "downscale" : downscale,
+             "negative"  : negative_image}
 
 not_kernel = ["grayscale", "halftone", "rot90",
-             "rot180", "rotm90", "vert_flip", "hor_flip"]
+               "rot180", "rotm90", "vert_flip",
+               "hor_flip", "downscale", "negative"]
 
 def proc_image(path, name, save):
     try:
@@ -414,6 +459,8 @@ def main():
     rm90      = rotm90(image, SAVE)
     hflip     = hor_flip(image, SAVE)
     vflip     = vert_flip(image, SAVE)
+    ds        = downscale(image, SAVE)
+    neg       = negative_image(image, SAVE)
 
     print("Done!")
 if __name__ == "__main__":
