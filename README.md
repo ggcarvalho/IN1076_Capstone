@@ -8,13 +8,13 @@ This project aims at implementing a basic image processing tool without relying 
 
 - argparse and Sys: parse command line arguments.
 
-- Matplotlib: display output.
+- Matplotlib: To display the output.
 
-- Pylab: format the displayed output.
+- Pylab: To format the displayed output.
 
-- Numpy: used to store arrays, uint8 type casting, min-max calculation.
+- Numpy: Used to store arrays.
 
-- tqdm: used in every outermost for loop to generate a progress bar.
+- tqdm: Used to generate progress bars.
 
 There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
 
@@ -66,19 +66,19 @@ Finally, run `python proc_image.py -h` if you need help.
 
 The image processing tools available and their respective names (you should use theses names when running the program) are given below:
 
-- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance is calculated using l = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
+- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
 
 - Halftone (`halftone`): converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). Due to this mapping, halftoned images have three times the width and three times the height of the original image.
 
 ![Halftone map](halftone_map.png)
 
-- Mean blur (`mean`): takes an average of 3 x 3 regions.
+- Mean blur (`mean`): Takes an average of 3 x 3 regions.
 
-- Gaussian blur (`gaussian`): takes a weighted average of a 3 x 3 region using a gaussian function.
+- Gaussian blur (`gaussian`): Takes a weighted average of a 3 x 3 region using a gaussian function.
 
-- Sharpen (`sharpen`): sharpens the image. Formally, substracts the 4-neighbors laplacian from the original image.
+- Sharpen (`sharpen`): Sharpens the image. Formally, substracts the 4-neighbors laplacian from the original image.
 
-- Laplacian (`laplacian`): returns the 8-neighbors laplacian applied to the image.
+- Laplacian (`laplacian`): Returns the 8-neighbors laplacian applied to the image.
 
 - Emboss (`emboss`): Enhance image emboss.
 
@@ -92,7 +92,24 @@ The image processing tools available and their respective names (you should use 
 
 - Identity (`identity`): Returns the original image.
 
+- 90 degrees rotation (`rot90`): Rotates the image 90 degrees clockwise.
+
+- 180 degrees rotation (`rot180`): Rotates the image 180 degrees.
+
+- Minus 90 degrees rotation (`rotm90`): Rotates the image 90 degrees counterclockwise.
+
+- Vertical flip (`vert_flip`): Produces a mirrored image.
+
+- Horizontal flip (`hor_flip`): Vertical flip and 180 degrees rotation combined.
+
 ## Convolution | Cross-correlation
 
-The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernel matrices. All of the kernel matrices are already "rotated".  In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
+The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernels. All of the kernel matrices are already "rotated".  In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
+
 ![convolution](conv.gif)
+
+### Remark
+
+It was used the so-called *periodic boundary condition*, much like the torus below.
+
+![torus](torus.png)

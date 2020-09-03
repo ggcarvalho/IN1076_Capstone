@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 from pylab import rcParams
+from functools import reduce
 from argparse import ArgumentTypeError
 
 rcParams['figure.figsize'] = 8, 8
@@ -38,10 +39,8 @@ def is_grayscale(image):
 def clip(a):
     if a < 0:
         return 0
-
     elif a > 255:
         return 255
-
     else:
         return a
 
@@ -54,12 +53,10 @@ def zeros(height, width, depth):
 
 def convert_grayscale(image, save, show = True):
     if not is_grayscale(image):
+        height, width, _ = get_shape(image)
+        gray_image       = zeros(height, width, 1)
 
-        height     = get_shape(image)[0]
-        width      = get_shape(image)[1]
-        gray_image = zeros(height, width, 1)
-
-        for i in tqdm(range(height)):
+        for i in tqdm(range(height), desc = "grayscale"):
             for j in range(width):
                 r, g, b   = image[i, j, 2], image[i, j, 1], image[i, j, 0]
                 luminance = get_luminance(r, g, b)
@@ -73,15 +70,28 @@ def convert_grayscale(image, save, show = True):
             plt.show()
         return np.array(gray_image)
     else:
-
         if show:
             plt.imshow(image, cmap = "gray")
             plt.axis("off")
             plt.show()
         return image
 
-def min_max(image, new_min, new_max):
-    return np.uint8((image - image.min())*( (new_max - new_min)/(image.max() - image.min()) ) + new_min)
+def get_grayscale_image_range(image):
+    if is_grayscale(image):
+        image_min = reduce(min, map(min, image))
+        image_max = reduce(max, map(max, image))
+        return image_min, image_max
+    else:
+        raise Exception("This function works for grayscale images only!")
+
+def adjust(image, new_min, new_max):
+    image_min, image_max = get_grayscale_image_range(image)
+    h, w, d = get_shape(image)
+    adjusted = zeros(h, w, d)
+    for i in tqdm(range(h), desc = "Adjusting the image"):
+        for j in range(w):
+            adjusted[i, j] = int((image[i, j] - image_min)*((new_max - new_min)/(image_max - image_min)) + new_min)
+    return adjusted
 
 def gen_halftone_masks():
     m = zeros(3, 3, 10)
@@ -117,12 +127,14 @@ def gen_halftone_masks():
 
 def halftone(image, save):
     gray      = convert_grayscale(image, False, False)
-    adjust    = min_max(gray, 0, 9)
+    adjusted  = adjust(gray, 0, 9)
     m         = gen_halftone_masks()
-    halftoned = zeros(3*get_shape(adjust)[0], 3*get_shape(adjust)[1], 1)
-    for j in tqdm(range(get_shape(adjust)[0]), unit_scale=1):
-        for i in range(get_shape(adjust)[1]):
-            index = adjust[j, i]
+
+    height, width, _ = get_shape(image)
+    halftoned        = zeros(3*height, 3*width, 1)
+    for j in tqdm(range(height), desc = "halftone"):
+        for i in range(width):
+            index = adjusted[j, i]
             halftoned[3*j:3+3*j, 3*i:3+3*i] = m[:, :, index]
 
     halftoned = 255*halftoned
@@ -152,7 +164,7 @@ kernels = {"mean"      : np.array([[1/9, 1/9, 1/9],
 
            "emboss"    : np.array([[-2, -1, 0],
                                    [-1,  1, 1],
-                                   [0 ,  1, 2]]),
+                                   [ 0,  1, 2]]),
 
            "motion"    : np.array([[1/9, 0, 0, 0, 0, 0, 0, 0, 0],
                                    [0, 1/9, 0, 0, 0, 0, 0, 0, 0],
@@ -189,13 +201,12 @@ def apply_kernel(image, kernel, save):
     dim           = len(kernel_matrix)
     center        = (dim - 1)//2
 
-    width   = get_shape(image)[1]
-    height  = get_shape(image)[0]
+    height, width, _ = get_shape(image)
 
     if not is_grayscale(image):
         picture = zeros(height, width, 3)
 
-        for y in tqdm(range(height)):
+        for y in tqdm(range(height), desc = kernel):
             for x in range(width):
 
                 red = zeros(dim, dim, 1)
@@ -221,7 +232,7 @@ def apply_kernel(image, kernel, save):
                         greenc += green[i, j]*kernel_matrix[i, j]
                         bluec  += blue[i, j]*kernel_matrix[i, j]
 
-                r, g, b = map(int, [redc, greenc, bluec])
+                r, g, b = map(int,  [redc, greenc, bluec])
                 r, g, b = map(clip, [r, g, b])
 
                 picture[y, x, 2] = r
@@ -236,7 +247,7 @@ def apply_kernel(image, kernel, save):
     else:
         picture = zeros(height, width, 1)
 
-        for y in tqdm(range(height)):
+        for y in tqdm(range(height), desc = kernel):
             for x in range(width):
 
                 aux = zeros(dim, dim, 1)
@@ -260,6 +271,93 @@ def apply_kernel(image, kernel, save):
         plt.show()
         return picture
 
+def transpose(m):
+    height, width, depth = get_shape(m)
+
+    transposed = zeros(width, height, depth)
+    for i in range(width):
+        for j in range(height):
+            transposed[i, j] = m[j, i]
+    return transposed
+
+def aux90(image):
+    return transpose(image)[:,::-1]
+
+def rot90(image, save):
+    print("Rotating the image 90 degrees clockwise...")
+    rot = aux90(image)
+    if save:
+        cv2.imwrite("rot90.png", rot)
+    if is_grayscale(image):
+        plt.imshow(rot, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(rot[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return transpose(image)[:,::-1]
+
+def rot180(image, save):
+    print("Rotating the image 180 degrees clockwise...")
+    rot = image[::-1, ::-1]
+    if save:
+        cv2.imwrite("rot180.png", rot)
+    if is_grayscale(image):
+        plt.imshow(rot, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(rot[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return rot
+
+def rotm90(image, save):
+    print("Rotating the image 90 degrees counterclockwise...")
+    rot = aux90(image[::-1, ::-1])
+    if save:
+        cv2.imwrite("rot270.png", rot)
+    if is_grayscale(image):
+        plt.imshow(rot, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(rot[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return rot
+
+def vert_flip(image, save):
+    print("Flipping vertically...")
+    flip = image[:, ::-1]
+    if save:
+        cv2.imwrite("vflip.png", flip)
+    if is_grayscale(image):
+        plt.imshow(flip, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(flip[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return flip
+
+def hor_flip(image, save):
+    print("Flipping horizontally...")
+    flip = image[::-1]
+    if save:
+        cv2.imwrite("hflip.png", flip)
+    if is_grayscale(image):
+        plt.imshow(flip, cmap = "gray")
+        plt.axis("off")
+        plt.show()
+    else:
+        plt.imshow(flip[:, :, ::-1])
+        plt.axis("off")
+        plt.show()
+    return flip
+
 functions = {"grayscale" : convert_grayscale,
              "halftone"  : halftone,
              "mean"      : apply_kernel,
@@ -272,13 +370,21 @@ functions = {"grayscale" : convert_grayscale,
              "y_edge"    : apply_kernel,
              "brighten"  : apply_kernel,
              "darken"    : apply_kernel,
-             "identity"  : apply_kernel}
+             "identity"  : apply_kernel,
+             "rot90"     : rot90,
+             "rot180"    : rot180,
+             "rotm90"    : rotm90,
+             "hor_flip"  : hor_flip,
+             "vert_flip" : vert_flip}
+
+not_kernel = ["grayscale", "halftone", "rot90",
+             "rot180", "rotm90", "vert_flip", "hor_flip"]
 
 def proc_image(path, name, save):
     try:
-        image = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
+        image    = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
         function = functions.get(name)
-        if name == "grayscale" or name == "halftone":
+        if name in not_kernel:
             function(image, save)
         else:
             function(image, name, save)
@@ -303,6 +409,12 @@ def main():
     brighten  = apply_kernel(image, "brighten", SAVE)
     darken    = apply_kernel(image, "darken", SAVE)
     identity  = apply_kernel(image, "identity", SAVE)
+    r90       = rot90(image, SAVE)
+    r180      = rot180(image, SAVE)
+    rm90      = rotm90(image, SAVE)
+    hflip     = hor_flip(image, SAVE)
+    vflip     = vert_flip(image, SAVE)
 
+    print("Done!")
 if __name__ == "__main__":
     main()
