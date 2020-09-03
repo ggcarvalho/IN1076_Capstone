@@ -104,7 +104,7 @@ The image processing tools available and their respective names (you should use 
 
 - Edge detectors (`y_edge`, `x_edge`): Sobel filters to detect vertical and horizontal edges, respectively.
 
-- Brighten (`brighten`): Brightens the image in 20%.
+- Brighten (`brighten`): Brightens the image in 25%.
 
 - Darken (`darken`): Darkens the image by 25%.
 
