@@ -2,25 +2,39 @@
 
 Final project for IN1076 @ CIN - UFPE, 2020.1.
 
-This project aims at implementing a basic image processing tool without relying on built-in functions, found in several libraries. Todo so, we use:
+This project aims at implementing a basic image processing tool without relying on built-in functions, found in several libraries.
 
-- Open CV: read and write images.
+## Requirements
 
-- argparse and sys: parse command line arguments.
+We use:
 
-- Matplotlib: To display the output.
+- Open CV: read and write images. Installation:
+
+        pip install opencv-python
+
+- argparse and sys: parse command line arguments. Installation:
+
+        pip install argparse
+
+- Matplotlib: To display the output. Installation:
+
+        pip install matplotlib
 
 - Pylab: To format the displayed output.
 
-- Numpy: Used to store arrays.
+- Numpy: Used to store arrays. Intallation:
 
-- tqdm: Used to generate progress bars.
+        pip install numpy
+
+- tqdm: Used to generate progress bars. Installation:
+
+        pip install tqdm
 
 There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
 
 ### Disclaimer
 
-The program is not optimized, performance-wise. Therefore, for sufficiently large pictures this process takes a while.
+The program is not optimized, performance-wise. Therefore, for sufficiently large pictures, this process takes a while.
 
 ## Using the program
 
@@ -32,7 +46,7 @@ To use this program run:
 
     python proc_image.py ~/Desktop/cat.jpg gaussian False
 
-The processed image will always be displayed when the processing is done.
+The processed image will **always** be displayed when the processing is done.
 
 ## Using the test client
 
