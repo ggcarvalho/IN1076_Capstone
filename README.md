@@ -2,17 +2,17 @@
 
 Final project for IN1076 @ CIN - UFPE, 2020.1.
 
-This project aims at implementing a basic image processing tool without relying on built-in functions, found in several libraries.
+This project aims at implementing a basic image processing tool without relying on image processing methods found in several libraries.
 
 ## Requirements
 
 We use:
 
-- Open CV: read and write images. Installation:
+- Open CV: To read and write images. Installation:
 
         pip install opencv-python
 
-- argparse and sys: parse command line arguments. Installation:
+- argparse and sys: To parse command line arguments. Installation:
 
         pip install argparse
 
@@ -20,7 +20,7 @@ We use:
 
         pip install matplotlib
 
-- Numpy: Used to store arrays. Intallation:
+- Numpy: Used to store arrays. Installation:
 
         pip install numpy
 
@@ -32,11 +32,11 @@ We use:
 
         pip install functools
 
-There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the implementation needed and a test client, while the latter is the main application.
+There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the methods implemented and a test client, while the latter is the main application.
 
 ### Disclaimer
 
-The program is not optimized, performance-wise. Therefore, for sufficiently large pictures, this process takes a while.
+The program is not optimized, performance-wise.
 
 ## Using the program
 
@@ -52,17 +52,9 @@ The processed image will **always** be displayed when the processing is done.
 
 ## Using the test client
 
-Run
+The test client calls every image processing method implemented and displays the output. By default, it uses test.png included in this project and will not save any output. Run it with
 
-    python image.py <save>
-
-### Example
-
-By running
-
-    python image.py 0
-
-you will execute the test client without saving the outputs.
+    python image.py
 
 Finally, run `python proc_image.py -h` if you need help.
 
@@ -70,9 +62,9 @@ Finally, run `python proc_image.py -h` if you need help.
 
 - List of allowed boolean values for `<save>`:
 
-  `True`: true, yes, t, y, 1, True, TRUE. In general, if v.lower() == true, you're fine.
+  `True`: true, yes, t, y, 1, True, TRUE. In general, any v satisfying v.lower() == true.
 
-  `False`: false, no, f, n, 0, False, FALSE. In general, if v.lower() == false, you're fine.
+  `False`: false, no, f, n, 0, False, FALSE. In general, any v satisfying v.lower() == false.
 
    Check `str2bool` in `image.py` for more.
 
@@ -82,9 +74,9 @@ Finally, run `python proc_image.py -h` if you need help.
 
 The image processing tools available and their respective names (you should use theses names when running the program) are given below:
 
-- Grayscale filter (`grayscale`): converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using the formula Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
+- Grayscale filter (`grayscale`): Converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using the formula Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
 
-- Halftone (`halftone`): converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). Due to this mapping, halftoned images have three times the width and three times the height of the original image.
+- Halftone (`halftone`): Converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). The output is a black & white picture that resembles a grayscale picture with lower resolution. Due to this mapping, halftoned images have three times the width and three times the height of the original image.
 
 ![Halftone map](halftone_map.png)
 

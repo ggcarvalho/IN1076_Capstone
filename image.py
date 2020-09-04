@@ -51,7 +51,7 @@ def zeros(height, width, depth):
     return np.array([[[0 for k in range(depth)] for j in range(width)] for i in range(height)]) if depth != 1\
           else np.array([[0 for j in range(width)] for i in range(height)])
 
-def convert_grayscale(image, save, show = True):
+def convert_grayscale(image, show = True):
     if not is_grayscale(image):
         height, width, _ = get_shape(image)
         gray_image       = zeros(height, width, 1)
@@ -62,8 +62,6 @@ def convert_grayscale(image, save, show = True):
                 luminance = get_luminance(r, g, b)
 
                 gray_image[i, j] = luminance
-        if save:
-            cv2.imwrite("gray.png", gray_image)
         if show:
             plt.imshow(gray_image, cmap = "gray")
             plt.axis("off")
@@ -125,8 +123,8 @@ def gen_halftone_masks():
 
     return m
 
-def halftone(image, save):
-    gray      = convert_grayscale(image, False, False)
+def halftone(image):
+    gray      = convert_grayscale(image, False)
     adjusted  = adjust(gray, 0, 9)
     m         = gen_halftone_masks()
 
@@ -138,9 +136,6 @@ def halftone(image, save):
             halftoned[3*j:3+3*j, 3*i:3+3*i] = m[:, :, index]
 
     halftoned = 255*halftoned
-    if save:
-        cv2.imwrite("halftone.png", halftoned)
-
     plt.imshow(halftoned, cmap = "gray")
     plt.axis("off")
     plt.show()
@@ -196,7 +191,7 @@ kernels = {"mean"      : np.array([[1/9, 1/9, 1/9],
                                    [0, 1, 0],
                                    [0, 0, 0]])}
 
-def apply_kernel(image, kernel, save):
+def apply_kernel(image, kernel):
     kernel_matrix = kernels.get(kernel)
     dim           = len(kernel_matrix)
     center        = (dim - 1)//2
@@ -238,8 +233,6 @@ def apply_kernel(image, kernel, save):
                 picture[y, x, 2] = r
                 picture[y, x, 1] = g
                 picture[y, x, 0] = b
-        if save:
-            cv2.imwrite(kernel + ".png", picture)
         plt.imshow(picture[:, :, ::-1])
         plt.axis("off")
         plt.show()
@@ -263,9 +256,6 @@ def apply_kernel(image, kernel, save):
                 pxl_intensity = round(gray)
                 pxl_intensity = clip(pxl_intensity)
                 picture[y, x] = int(pxl_intensity)
-        if save:
-            cv2.imwrite(kernel + ".png", picture)
-
         plt.imshow(picture, cmap = "gray")
         plt.axis("off")
         plt.show()
@@ -283,11 +273,9 @@ def transpose(m):
 def aux90(image):
     return transpose(image)[:,::-1]
 
-def rot90(image, save):
+def rot90(image):
     print("Rotating the image 90 degrees clockwise...")
     rot = aux90(image)
-    if save:
-        cv2.imwrite("rot90.png", rot)
     if is_grayscale(image):
         plt.imshow(rot, cmap = "gray")
         plt.axis("off")
@@ -298,11 +286,9 @@ def rot90(image, save):
         plt.show()
     return transpose(image)[:,::-1]
 
-def rot180(image, save):
-    print("Rotating the image 180 degrees clockwise...")
+def rot180(image):
+    print("Rotating the image 180 degrees...")
     rot = image[::-1, ::-1]
-    if save:
-        cv2.imwrite("rot180.png", rot)
     if is_grayscale(image):
         plt.imshow(rot, cmap = "gray")
         plt.axis("off")
@@ -313,11 +299,9 @@ def rot180(image, save):
         plt.show()
     return rot
 
-def rotm90(image, save):
+def rotm90(image):
     print("Rotating the image 90 degrees counterclockwise...")
     rot = aux90(image[::-1, ::-1])
-    if save:
-        cv2.imwrite("rot270.png", rot)
     if is_grayscale(image):
         plt.imshow(rot, cmap = "gray")
         plt.axis("off")
@@ -328,11 +312,9 @@ def rotm90(image, save):
         plt.show()
     return rot
 
-def vert_flip(image, save):
+def vert_flip(image):
     print("Flipping vertically...")
     flip = image[:, ::-1]
-    if save:
-        cv2.imwrite("vflip.png", flip)
     if is_grayscale(image):
         plt.imshow(flip, cmap = "gray")
         plt.axis("off")
@@ -343,11 +325,9 @@ def vert_flip(image, save):
         plt.show()
     return flip
 
-def hor_flip(image, save):
+def hor_flip(image):
     print("Flipping horizontally...")
     flip = image[::-1]
-    if save:
-        cv2.imwrite("hflip.png", flip)
     if is_grayscale(image):
         plt.imshow(flip, cmap = "gray")
         plt.axis("off")
@@ -358,11 +338,9 @@ def hor_flip(image, save):
         plt.show()
     return flip
 
-def downscale(image, save):
+def downscale(image):
     print("Reducing image size...")
     ds = image[::2, ::2]
-    if save:
-        cv2.imwrite("downscaled.png", ds)
     if is_grayscale(image):
         plt.imshow(ds, cmap = "gray")
         plt.axis("off")
@@ -382,14 +360,12 @@ def negative_pixel(pixel):
     except:
         return 255 - pixel
 
-def negative_image(image, save):
+def negative_image(image):
     h, w, d = get_shape(image)
     negative = zeros(h, w, d)
     for i in tqdm(range(h), desc = "negative image"):
         for j in range(w):
             negative[i, j] = negative_pixel(image[i, j])
-    if save:
-        cv2.imwrite("negative.png", negative)
     if is_grayscale(image):
         plt.imshow(negative, cmap = "gray")
         plt.axis("off")
@@ -430,37 +406,38 @@ def proc_image(path, name, save):
         image    = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
         function = functions.get(name)
         if name in not_kernel:
-            function(image, save)
+            proc = function(image)
         else:
-            function(image, name, save)
+            proc = function(image, name)
+        if save:
+            cv2.imwrite(name + ".png", proc)
     except:
         raise Exception("\nSorry, something is wrong!")
 
 def main():
-    SAVE      = str2bool(sys.argv[1])
-    path      = "test1.png"
+    path      = "test.png"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
-    gray      = convert_grayscale(image, SAVE)
-    half      = halftone(image, SAVE)
-    mean      = apply_kernel(image, "mean", SAVE)
-    gaussian  = apply_kernel(image, "gaussian", SAVE)
-    sharpen   = apply_kernel(image, "sharpen", SAVE)
-    laplacian = apply_kernel(image, "laplacian", SAVE)
-    emboss    = apply_kernel(image, "emboss", SAVE)
-    motion    = apply_kernel(image, "motion", SAVE)
-    x_edge    = apply_kernel(image, "x_edge", SAVE)
-    y_edge    = apply_kernel(image, "y_edge", SAVE)
-    brighten  = apply_kernel(image, "brighten", SAVE)
-    darken    = apply_kernel(image, "darken", SAVE)
-    identity  = apply_kernel(image, "identity", SAVE)
-    r90       = rot90(image, SAVE)
-    r180      = rot180(image, SAVE)
-    rm90      = rotm90(image, SAVE)
-    hflip     = hor_flip(image, SAVE)
-    vflip     = vert_flip(image, SAVE)
-    ds        = downscale(image, SAVE)
-    neg       = negative_image(image, SAVE)
+    gray      = convert_grayscale(image)
+    half      = halftone(image)
+    mean      = apply_kernel(image, "mean")
+    gaussian  = apply_kernel(image, "gaussian")
+    sharpen   = apply_kernel(image, "sharpen")
+    laplacian = apply_kernel(image, "laplacian")
+    emboss    = apply_kernel(image, "emboss")
+    motion    = apply_kernel(image, "motion")
+    x_edge    = apply_kernel(image, "x_edge")
+    y_edge    = apply_kernel(image, "y_edge")
+    brighten  = apply_kernel(image, "brighten")
+    darken    = apply_kernel(image, "darken")
+    identity  = apply_kernel(image, "identity")
+    r90       = rot90(image)
+    r180      = rot180(image)
+    rm90      = rotm90(image)
+    hflip     = hor_flip(image)
+    vflip     = vert_flip(image)
+    ds        = downscale(image)
+    neg       = negative_image(image)
 
     print("Done!")
 if __name__ == "__main__":
