@@ -125,3 +125,4 @@ The function apply_kernel in `image.py` implements the cross-correlation. It is 
 It was used the so-called *periodic boundary condition*, much like the torus below.
 
 ![torus](torus.png)
+
