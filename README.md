@@ -28,7 +28,7 @@ We use:
 
         pip install tqdm
 
-- functools: The `reduce` method was used to find the minimum and maximum values of a grayscale images. Installation:
+- functools: The `reduce` method was used to find the minimum and maximum values of grayscale images. Installation:
 
         pip install functools
 
@@ -94,7 +94,7 @@ The image processing tools available and their respective names (you should use 
 
 - Edge detectors (`y_edge`, `x_edge`): Sobel filters to detect vertical and horizontal edges, respectively.
 
-- Brighten (`brighten`): Brightens the image in 25%.
+- Brighten (`brighten`): Brightens the image by 25%.
 
 - Darken (`darken`): Darkens the image by 25%.
 
@@ -104,7 +104,7 @@ The image processing tools available and their respective names (you should use 
 
 - 180 degrees rotation (`rot180`): Rotates the image 180 degrees.
 
-- Minus 90 degrees rotation (`rotm90`): Rotates the image 90 degrees counterclockwise (or 270 degress clockwise).
+- Minus 90 degrees rotation (`rotm90`): Rotates the image 90 degrees counterclockwise (or 270 degrees clockwise).
 
 - Vertical flip (`vert_flip`): Produces a mirrored image.
 
@@ -125,4 +125,3 @@ The function apply_kernel in `image.py` implements the cross-correlation. It is 
 It was used the so-called *periodic boundary condition*, much like the torus below.
 
 ![torus](torus.png)
-
