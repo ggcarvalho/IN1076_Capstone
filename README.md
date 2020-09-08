@@ -34,7 +34,7 @@ We use:
 
 There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the methods implemented and a test client, while the latter is the main application.
 
-### Remarks
+### Remarks 1
 
 - The program is not optimized, performance-wise.
 
@@ -60,7 +60,7 @@ The test client calls every image processing method implemented and displays the
 
 Finally, run `python proc_image.py -h` if you need help.
 
-### Remarks
+### Remarks 2
 
 - List of allowed boolean values for `<save>`:
 
