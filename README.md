@@ -60,7 +60,7 @@ The test client calls every image processing method implemented and displays the
 
 Finally, run `python proc_image.py -h` if you need help.
 
-## Remarks
+### Remarks
 
 - List of allowed boolean values for `<save>`:
 
