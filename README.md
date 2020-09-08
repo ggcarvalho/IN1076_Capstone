@@ -40,7 +40,7 @@ The program is not optimized, performance-wise.
 
 ## Using the program
 
-To use this program run:
+To use the main application run:
 
     python proc_image.py <path to image> <process name> <save>
 
@@ -72,7 +72,7 @@ Finally, run `python proc_image.py -h` if you need help.
 
 ## Tools
 
-The image processing tools available and their respective names (you should use theses names when running the program) are given below:
+The image processing tools available and their respective names (you should use these names when running the main application) are given below:
 
 - Grayscale filter (`grayscale`): Converts an RGB image into grayscale using the luminance of a pixel. The luminance Y is calculated using the formula Y = 0.299r + 0.587g + 0.114b where r, g, and b are the pixel values for the red, green, and blue channels, respectively.
 
@@ -84,7 +84,7 @@ The image processing tools available and their respective names (you should use 
 
 - Gaussian blur (`gaussian`): Takes a weighted average of a 3 x 3 region using a gaussian function.
 
-- Sharpen (`sharpen`): Sharpens the image. Formally, substracts the 4-neighbors laplacian from the original image.
+- Sharpen (`sharpen`): Sharpens the image. Formally, it substracts the 4-neighbors laplacian from the original image.
 
 - Laplacian (`laplacian`): Returns the 8-neighbors laplacian applied to the image.
 
