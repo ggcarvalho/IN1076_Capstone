@@ -34,9 +34,11 @@ We use:
 
 There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the methods implemented and a test client, while the latter is the main application.
 
-### Disclaimer
+### Remarks
 
-The program is not optimized, performance-wise.
+- The program is not optimized, performance-wise.
+
+- Tested image formats: .jpg , .jpeg, .png
 
 ## Using the program
 
