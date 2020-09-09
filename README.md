@@ -2,7 +2,7 @@
 
 Final project for IN1076 @ CIN - UFPE, 2020.1.
 
-This project aims at implementing a basic image processing tool without relying on image processing methods found in several libraries.
+This project aims at implementing a basic image processing tool without relying on built-in image processing methods found in several libraries.
 
 ## Requirements
 
@@ -54,7 +54,7 @@ The processed image will **always** be displayed when the processing is done.
 
 ## Using the test client
 
-The test client calls every image processing method implemented and displays the output. By default, it uses test.png included in this project and will not save any output. Run it with
+The test client calls every image processing method implemented and displays the output. By default, it uses `test_images/test.png` included in this project and will not save any output. Run it with
 
     python image.py
 
@@ -80,7 +80,7 @@ The image processing tools available and their respective names (you should use 
 
 - Halftone (`halftone`): Converts the range of a grayscale image to [0, 9], and for each pixel value performs a mapping according to the following image from this [reference](http://www.imageprocessingplace.com/DIP-3E/dip3e_student_projects.htm#02-01). The output is a black & white picture that resembles a grayscale picture with lower resolution. Due to this mapping, halftoned images have three times the width and three times the height of the original image.
 
-![Halftone map](halftone_map.png)
+![Halftone map](readme_images/halftone_map.png)
 
 - Mean blur (`mean`): Takes an average of 3 x 3 regions.
 
@@ -120,10 +120,10 @@ The image processing tools available and their respective names (you should use 
 
 The function apply_kernel in `image.py` implements the cross-correlation. It is similar to a convolution, without needing to "rotate" the kernels. All of the kernel matrices are already "rotated".  In that case, the cross-correlation with the given kernel is, by definition, the convolution needed to process the image.
 
-![convolution](conv.gif)
+![convolution](gifs/conv.gif)
 
 ### Remark
 
 It was used the so-called *periodic boundary condition*, much like the torus below.
 
-![torus](torus.png)
+![torus](readme_images/torus.png)

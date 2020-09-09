@@ -415,7 +415,7 @@ def proc_image(path, name, save):
         raise Exception("\nSorry, something is wrong!")
 
 def main():
-    path      = "test.png"
+    path      = "test_images/test.png"
     image     = cv2.imread(path, cv2.IMREAD_UNCHANGED|cv2.IMREAD_ANYDEPTH)
 
     gray      = convert_grayscale(image)
