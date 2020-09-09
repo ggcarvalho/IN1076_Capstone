@@ -6,7 +6,7 @@ This project aims at implementing a basic image processing tool without relying 
 
 ## Requirements
 
-We use:
+Besides Python 3 you will need:
 
 - Open CV: To read and write images. Installation:
 
@@ -32,7 +32,7 @@ We use:
 
         pip install functools
 
-There are two Python 3.x files, `image.py` and `proc_image.py`,  the former containing all the methods implemented and a test client, while the latter is the main application.
+There are two Python 3 files, `image.py` and `proc_image.py`,  the former containing all the methods implemented and a test client, while the latter is the main application.
 
 ### Remarks 1
 
