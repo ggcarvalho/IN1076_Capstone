@@ -40,6 +40,8 @@ There are two Python 3 files, `image.py` and `proc_image.py`,  the former contai
 
 - Tested image formats: .jpg , .jpeg, .png
 
+- If Python 3 is not your default Python version (but you have it installed), use pip3, when installing libs, and python3, when executing the programs.
+
 ## Using the program
 
 To use the main application run:
