@@ -84,7 +84,7 @@ def get_grayscale_image_range(image):
 
 def adjust(image, new_min, new_max):
     image_min, image_max = get_grayscale_image_range(image)
-    h, w, d = get_shape(image)
+    h, w, d  = get_shape(image)
     adjusted = zeros(h, w, d)
     for i in tqdm(range(h), desc = "Adjusting the image"):
         for j in range(w):
